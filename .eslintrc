@@ -1,0 +1,51 @@
+{
+    "extends": ["plugin:@typescript-eslint/recommended", "airbnb"],
+    "parser": "@typescript-eslint/parser",
+    "globals": {
+        "document": false,
+    },
+    "rules": {
+        "no-new": 0,
+        "linebreak-style": 0,
+        "jsx-a11y/label-has-for": 0,
+        "jsx-a11y/iframe-has-title": 0,
+        "jsx-a11y/media-has-caption": 0,
+        "jsx-a11y/no-noninteractive-tabindex": 0,
+        "jsx-a11y/label-has-associated-control": 0,
+        "react/jsx-props-no-spreading": 0,
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error", {
+            "vars": "all",
+            "args": "after-used",
+            "ignoreRestSiblings": false
+        }],
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "react/jsx-filename-extension": [1, {
+            "extensions": [".tsx", ".jsx"]
+        }],
+        "no-restricted-syntax": [
+            "error",
+            {
+                "selector": "ForInStatement",
+                "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+            },
+            {
+                "selector": "LabeledStatement",
+                "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+            },
+            {
+                "selector": "WithStatement",
+                "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+            }
+        ],
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            },
+        }
+    },
+}
