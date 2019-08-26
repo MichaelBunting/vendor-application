@@ -19,19 +19,25 @@ export default (): React.ReactElement => {
     return true;
   };
 
+  const handleFormSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    // const data = new FormData(e.currentTarget as HTMLFormElement);
+  };
+
   return (
     <div className="application">
       <h1 className="application__header">Apply Now</h1>
 
-      <form className="application__form">
+      <form className="application__form" onSubmit={handleFormSubmit}>
         <div className="application__section application__section--inputs">
           <Input label="Contact Name" name="contactName" />
-          <Input label="Email Address" name="email" />
+          <Input type="email" label="Email Address" name="email" />
           <Input label="Business Name" name="business" />
-          <Input label="Website" name="website" />
+          <Input label="Website" name="website" required={false} />
           <Select
             label="Business Type"
-            name="business"
+            name="businessType"
             options={{
               Manufacturer: 'manufacturer',
               '3rd Party': '3rdparty',
@@ -128,7 +134,7 @@ export default (): React.ReactElement => {
           />
           <Input type="text" label="Image/Video Database" name="imgDatabase" />
           <InputWrapper label="Existing Customer Presence" id="applicationCustomerPresence" type="textarea">
-            <textarea id="applicationCustomerPresence" rows={4} className="application__input application__input--textarea" />
+            <textarea id="applicationCustomerPresence" rows={4} className="application__input application__input--textarea" name="customerPresence" />
           </InputWrapper>
         </div>
 

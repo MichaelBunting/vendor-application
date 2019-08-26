@@ -16,7 +16,7 @@ export default function Select({ label = '', name = '', options = {} }: SelectPr
     <InputWrapper
       {...{ id, label }}
     >
-      <select className="application__input" id={id}>
+      <select className="application__input" id={id} name={name}>
         {Object.keys(options).map((optionName) => (
           <option key={optionName} value={options[optionName]}>
             {optionName}

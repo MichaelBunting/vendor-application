@@ -3,6 +3,7 @@
     "parser": "@typescript-eslint/parser",
     "globals": {
         "document": false,
+        "FormData": false,
     },
     "rules": {
         "no-new": 0,

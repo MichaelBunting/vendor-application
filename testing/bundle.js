@@ -2161,6 +2161,7 @@ var react = createCommonjsModule(function (module) {
 }
 });
 var react_1 = react.useState;
+var react_2 = react.useCallback;
 
 var scheduler_production_min = createCommonjsModule(function (module, exports) {
 Object.defineProperty(exports,"__esModule",{value:!0});var d=void 0,e=void 0,g=void 0,m=void 0,n=void 0;exports.unstable_now=void 0;exports.unstable_forceFrameRate=void 0;
@@ -26689,15 +26690,73 @@ function capitalize(string) {
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 }
 function camelCase(string) {
-  return string.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+  const properlyCasedString = string.replace(/^([A-Z]+)(?=[A-Z])/g, word => word.toLowerCase());
+  return properlyCasedString.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+}
+
+function useInputValidation(validationFunction) {
+  const [error, setError] = react_1(null);
+
+  const handleInputValidation = e => {
+    const validationResults = validationFunction(e);
+
+    if (validationResults.success) {
+      setError(null);
+    }
+
+    setError(validationResults.error);
+  };
+
+  const setInputRef = react_2(node => {
+    if (node) {
+      node.addEventListener('blur', handleInputValidation);
+    }
+  }, []);
+  return [setInputRef, error];
 }
 
 function Input({
   type = 'text',
   label,
-  name
+  name,
+  required = true
 }) {
+  const inputValidator = e => {
+    const input = e.target;
+
+    if (input.value && input.value.replace(/\s/g, '')) {
+      if (type === 'email') {
+        if (/.+@(?:.+){2,}\.(?:.+){2,}/.test(input.value)) {
+          return {
+            success: true
+          };
+        }
+
+        return {
+          success: false,
+          error: 'Invalid email address'
+        };
+      }
+
+      return {
+        success: true
+      };
+    }
+
+    return {
+      success: false,
+      error: 'Input is required'
+    };
+  };
+
   const id = `application${capitalize(name)}`;
+  let inputRef;
+  let error;
+
+  if (required) {
+    [inputRef, error] = useInputValidation(inputValidator);
+  }
+
   return react.createElement(InputWrapper, {
     label,
     id
@@ -26706,8 +26765,11 @@ function Input({
     name,
     id
   }, {
-    className: "application__input"
-  })));
+    className: "application__input",
+    ref: inputRef
+  })), error && react.createElement("div", {
+    className: "application__form-error"
+  }, error));
 }
 
 function Select({
@@ -26721,7 +26783,8 @@ function Select({
     label
   }, react.createElement("select", {
     className: "application__input",
-    id: id
+    id: id,
+    name: name
   }, Object.keys(options).map(optionName => react.createElement("option", {
     key: optionName,
     value: options[optionName]
@@ -26765,32 +26828,40 @@ function Checkboxes({
   checkboxRestrictions
 }) {
   const [checkedInputs, setCheckedInputs] = react_1(new Map());
+  const [checkboxValues, setCheckboxValues] = react_1('');
 
   const handleCheckboxClick = e => {
-    if (!checkboxRestrictions) return;
     const currentCheckedInputs = checkedInputs;
     const input = e.currentTarget;
 
     if (input.checked) {
-      if (checkboxRestrictions(e, [...checkedInputs.values()])) {
+      if (!checkboxRestrictions) {
+        currentCheckedInputs.set(input.value, input);
+      } else if (checkboxRestrictions(e, [...checkedInputs.values()])) {
         currentCheckedInputs.set(input.value, input);
       }
     } else {
       currentCheckedInputs.delete(input.value);
     }
 
+    const currentCheckboxValues = [...currentCheckedInputs.values()].map(inputElement => inputElement.value).join(', ');
     setCheckedInputs(currentCheckedInputs);
+    setCheckboxValues(currentCheckboxValues);
   };
 
-  return react.createElement(react.Fragment, null, options.map(option => {
-    const optionValue = camelCase(option);
+  return react.createElement(react.Fragment, null, react.createElement("input", {
+    type: "hidden",
+    name: name,
+    value: checkboxValues
+  }), options.map(option => {
+    const sanitizedOption = option.replace(/[^A-z0-9\s()]|\(\w+\)+/g, '');
+    const optionValue = camelCase(sanitizedOption);
     return react.createElement("label", {
       className: "application__check-container",
       key: optionValue
     }, react.createElement("input", {
       type: "checkbox",
       className: "application__check-input",
-      name: name,
       value: optionValue,
       id: `${optionValue}Checkbox`,
       onClick: handleCheckboxClick
@@ -26849,18 +26920,24 @@ var VendorApplication = (() => {
     return true;
   };
 
+  const handleFormSubmit = e => {
+    e.preventDefault(); // const data = new FormData(e.currentTarget as HTMLFormElement);
+  };
+
   return react.createElement("div", {
     className: "application"
   }, react.createElement("h1", {
     className: "application__header"
   }, "Apply Now"), react.createElement("form", {
-    className: "application__form"
+    className: "application__form",
+    onSubmit: handleFormSubmit
   }, react.createElement("div", {
     className: "application__section application__section--inputs"
   }, react.createElement(Input, {
     label: "Contact Name",
     name: "contactName"
   }), react.createElement(Input, {
+    type: "email",
     label: "Email Address",
     name: "email"
   }), react.createElement(Input, {
@@ -26868,10 +26945,11 @@ var VendorApplication = (() => {
     name: "business"
   }), react.createElement(Input, {
     label: "Website",
-    name: "website"
+    name: "website",
+    required: false
   }), react.createElement(Select, {
     label: "Business Type",
-    name: "business",
+    name: "businessType",
     options: {
       Manufacturer: 'manufacturer',
       '3rd Party': '3rdparty',
@@ -26950,7 +27028,8 @@ var VendorApplication = (() => {
   }, react.createElement("textarea", {
     id: "applicationCustomerPresence",
     rows: 4,
-    className: "application__input application__input--textarea"
+    className: "application__input application__input--textarea",
+    name: "customerPresence"
   }))), react.createElement("div", {
     className: "application__section"
   }, react.createElement("div", null, react.createElement("button", {

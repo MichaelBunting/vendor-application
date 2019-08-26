@@ -73,6 +73,11 @@ input[type=number]::-webkit-outer-spin-button {
   .application__form-container--textarea {
     grid-column: 1 / -1; }
 
+.application__form-error {
+  color: red;
+  font-size: 12px;
+  margin: 5px 0; }
+
 .application__label {
   margin-bottom: 5px;
   display: block; }

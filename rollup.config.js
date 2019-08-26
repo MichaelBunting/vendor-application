@@ -46,7 +46,7 @@ export default [{
     commonjs({
       include: ['node_modules/**'],
       namedExports: {
-        'node_modules/react/index.js': ['useState'],
+        'node_modules/react/index.js': ['useState', 'useCallback'],
       },
     }),
     scss(),

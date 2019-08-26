@@ -10,35 +10,40 @@ interface CheckboxesProps {
 
 export default function Checkboxes({ name = '', options, checkboxRestrictions }: CheckboxesProps) {
   const [checkedInputs, setCheckedInputs] = useState(new Map());
+  const [checkboxValues, setCheckboxValues] = useState('');
 
   const handleCheckboxClick = (e: React.SyntheticEvent) => {
-    if (!checkboxRestrictions) return;
-
     const currentCheckedInputs = checkedInputs;
     const input = e.currentTarget as HTMLInputElement;
 
     if (input.checked) {
-      if (checkboxRestrictions(e, [...checkedInputs.values()])) {
+      if (!checkboxRestrictions) {
+        currentCheckedInputs.set(input.value, input);
+      } else if (checkboxRestrictions(e, [...checkedInputs.values()])) {
         currentCheckedInputs.set(input.value, input);
       }
     } else {
       currentCheckedInputs.delete(input.value);
     }
 
+    const currentCheckboxValues = [...currentCheckedInputs.values()].map((inputElement: HTMLInputElement) => inputElement.value).join(', ');
+
     setCheckedInputs(currentCheckedInputs);
+    setCheckboxValues(currentCheckboxValues);
   };
 
   return (
     <>
+      <input type="hidden" name={name} value={checkboxValues} />
       {options.map((option) => {
-        const optionValue = camelCase(option);
+        const sanitizedOption = option.replace(/[^A-z0-9\s()]|\(\w+\)+/g, '');
+        const optionValue = camelCase(sanitizedOption);
 
         return (
           <label className="application__check-container" key={optionValue}>
             <input
               type="checkbox"
               className="application__check-input"
-              name={name}
               value={optionValue}
               id={`${optionValue}Checkbox`}
               onClick={handleCheckboxClick}
