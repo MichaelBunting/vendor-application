@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "rollup -c --environment BUILD:production",
-    "watch": "rollup -c --watch --environment BUILD:development"
+    "start": "rollup -c --watch --environment BUILD:development"
   },
   "dependencies": {
     "react": "^16.9.0",

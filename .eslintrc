@@ -4,6 +4,7 @@
     "globals": {
         "document": false,
         "FormData": false,
+        "fetch": false,
     },
     "rules": {
         "no-new": 0,

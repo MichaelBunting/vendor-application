@@ -7,7 +7,7 @@ import Checkboxes from './Checkboxes';
 import InputFile from './InputFile';
 import InputWrapper from './InputWrapper';
 
-export default (): React.ReactElement => {
+export default ({ formPostUrl }: { formPostUrl: string }): React.ReactElement => {
   const checkboxRestrictions = (e: React.SyntheticEvent, checkboxElements: React.ReactNode[]) => {
     const input = e.target as HTMLInputElement;
 
@@ -22,7 +22,12 @@ export default (): React.ReactElement => {
   const handleFormSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    // const data = new FormData(e.currentTarget as HTMLFormElement);
+    const body = new FormData(e.currentTarget as HTMLFormElement);
+
+    fetch(formPostUrl, {
+      method: 'POST',
+      body,
+    });
   };
 
   return (

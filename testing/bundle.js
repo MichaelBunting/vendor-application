@@ -26908,7 +26908,9 @@ function InputFile({
   })));
 }
 
-var VendorApplication = (() => {
+var VendorApplication = (({
+  formPostUrl
+}) => {
   const checkboxRestrictions = (e, checkboxElements) => {
     const input = e.target;
 
@@ -26921,7 +26923,12 @@ var VendorApplication = (() => {
   };
 
   const handleFormSubmit = e => {
-    e.preventDefault(); // const data = new FormData(e.currentTarget as HTMLFormElement);
+    e.preventDefault();
+    const body = new FormData(e.currentTarget);
+    fetch(formPostUrl, {
+      method: 'POST',
+      body
+    });
   };
 
   return react.createElement("div", {
@@ -27038,4 +27045,6 @@ var VendorApplication = (() => {
   }, "Apply to Sell")))));
 });
 
-reactDom.render(react.createElement(VendorApplication, null), document.getElementById('mount'));
+reactDom.render(react.createElement(VendorApplication, {
+  formPostUrl: "https://localhost/testing/index"
+}), document.getElementById('mount'));
