@@ -26908,7 +26908,7 @@ function InputFile({
   })));
 }
 
-var VendorApplication = (({
+var Form = (({
   formPostUrl
 }) => {
   const checkboxRestrictions = (e, checkboxElements) => {
@@ -27045,6 +27045,327 @@ var VendorApplication = (({
   }, "Apply to Sell")))));
 });
 
-reactDom.render(react.createElement(VendorApplication, {
-  formPostUrl: "https://localhost/testing/index"
+function Card({
+  icon,
+  title,
+  content
+}) {
+  return react.createElement("div", {
+    className: "mkt-card"
+  }, react.createElement("div", {
+    className: "mkt-icon mkt-icon--tucked"
+  }, react.createElement("img", {
+    className: "mkt-icon__img",
+    src: icon,
+    alt: "Reach Icon"
+  })), react.createElement("div", {
+    className: "mkt-title"
+  }, title), react.createElement("div", {
+    className: "mkt-copy"
+  }, content));
+}
+
+function Feature({
+  img,
+  title,
+  content,
+  link,
+  alignment
+}) {
+  return react.createElement("div", {
+    className: "mkt-article"
+  }, react.createElement("div", {
+    className: `mkt-article__img mkt-article__img--${alignment === 'left' ? 'right' : 'left'}`
+  }, react.createElement("img", {
+    src: img,
+    alt: "feature"
+  })), react.createElement("div", {
+    className: `mkt-article__card mkt-article__card--${alignment}`
+  }, react.createElement("div", {
+    className: "mkt-title"
+  }, title), react.createElement("div", {
+    className: "mkt-copy"
+  }, content), react.createElement("a", {
+    className: "mkt-link",
+    href: link.href
+  }, link.text, ' ', react.createElement("i", {
+    className: "fas fa-angle-right"
+  }))));
+}
+
+function Step({
+  icon,
+  content,
+  index,
+  showArrow = true
+}) {
+  return react.createElement(react.Fragment, null, react.createElement("div", {
+    className: "mkt-card"
+  }, react.createElement("div", {
+    className: "mkt-icon mkt-icon--tucked"
+  }, react.createElement("img", {
+    className: "mkt-icon__img",
+    src: icon,
+    alt: "icon"
+  })), react.createElement("div", {
+    className: "mkt-title"
+  }, "Step", ' ', index), react.createElement("div", {
+    className: "mkt-copy"
+  }, content)), showArrow && react.createElement("div", {
+    className: "mkt-how__arrow"
+  }, react.createElement("i", {
+    className: "fas fa-angle-right"
+  })));
+}
+
+function FAQProps({
+  title,
+  content
+}) {
+  return react.createElement("div", {
+    className: "mkt-card"
+  }, react.createElement("div", {
+    className: "mkt-title"
+  }, title), react.createElement("div", {
+    className: "mkt-copy"
+  }, content));
+}
+
+function Vendor({
+  theme = 'web',
+  logo,
+  cards,
+  quote,
+  brands,
+  features,
+  steps,
+  faq,
+  about
+}) {
+  return react.createElement("div", {
+    className: `mkt-landing ${`theme--${theme}`}`
+  }, react.createElement("div", {
+    className: "mkt-hero"
+  }, react.createElement("svg", {
+    className: "mkt-hero__svg",
+    viewBox: "0 0 100 100",
+    preserveAspectRatio: "none"
+  }, react.createElement("polygon", {
+    points: "0,100 100,0 100,101"
+  })), react.createElement("div", {
+    className: "mkt-hero__bg"
+  })), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-hero__container"
+  }, react.createElement("img", {
+    className: "mkt-hero__logo",
+    src: logo,
+    alt: "WebstaurantStore"
+  }), react.createElement("h1", {
+    className: "mkt-hero__headline"
+  }, "Sell Your Products"), react.createElement("h1", {
+    className: "mkt-hero__headline mkt-hero__headline--small"
+  }, "on the Largest Restaurant Supply\xA0Store"), react.createElement("a", {
+    className: "mkt-button mkt-button--white",
+    href: "#mkt-form"
+  }, "Apply to Sell")), react.createElement("div", {
+    className: "mkt-container__inner mkt-container__inner--cards"
+  }, cards.map(card => react.createElement(Card, _extends({
+    key: card.title
+  }, card))))), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-container__inner"
+  }, react.createElement("div", {
+    className: "mkt-quote"
+  }, react.createElement("div", {
+    className: "mkt-quote__icon"
+  }, react.createElement("img", {
+    className: "mkt-quote__img",
+    src: `../src/images/quote-icon${theme !== 'web' ? `-${theme}` : ''}.png`,
+    alt: "Quote Icon"
+  })), react.createElement("div", {
+    className: "mkt-quote__copy"
+  }, quote.content)), react.createElement("div", {
+    className: "mkt-quote__name"
+  }, react.createElement("img", {
+    className: "mkt-quote__img",
+    src: `../src/images/speech-point${theme !== 'web' ? `-${theme}` : ''}.png`,
+    alt: "Speech Point"
+  }), ' ', react.createElement("b", null, quote.name), ' ', quote.company))), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-container__inner"
+  }, react.createElement("div", {
+    className: "mkt__arrow mkt__arrow--left prev slick-prev"
+  }, react.createElement("i", {
+    className: "fas fa-angle-left"
+  })), react.createElement("div", {
+    className: "mkt-brands"
+  }, brands.map(brand => react.createElement("div", {
+    key: brand
+  }, react.createElement("img", {
+    className: "mkt-brands__img",
+    src: brand,
+    alt: "brand"
+  })))), react.createElement("div", {
+    className: "mkt__arrow mkt__arrow--right next slick-next"
+  }, react.createElement("i", {
+    className: "fas fa-angle-right"
+  })))), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-container__inner"
+  }, features.map(feature => react.createElement(Feature, _extends({
+    key: feature.title
+  }, feature))))), react.createElement("div", {
+    className: "mkt-featured"
+  }, react.createElement("svg", {
+    className: "mkt-featured__svg mkt-featured__svg--top",
+    viewBox: "0 0 100 100",
+    preserveAspectRatio: "none"
+  }, react.createElement("polygon", {
+    points: "0,-1 100,-1 100,32.65 0,100"
+  })), react.createElement("svg", {
+    className: "mkt-featured__svg mkt-featured__svg--bottom",
+    viewBox: "0 0 100 100",
+    preserveAspectRatio: "none"
+  }, react.createElement("polygon", {
+    points: "0,67.35 100,0 100,101 0,101"
+  })), react.createElement("div", {
+    className: "mkt-featured__bg"
+  })), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-title mkt-title--large"
+  }, "How it Works"), react.createElement("div", {
+    className: "mkt-container__inner mkt-container__inner--cards mkt-how"
+  }, steps.map((step, index) => react.createElement(Step, _extends({
+    key: step.icon
+  }, step, {
+    index: index,
+    showArrow: index + 1 < steps.length
+  }))))), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-title mkt-title--faq"
+  }, "Frequently Asked Questions"), react.createElement("div", {
+    className: "mkt-container__inner mkt-container__inner--faq mkt-faq"
+  }, faq.map(questionAnswer => react.createElement(FAQProps, _extends({
+    key: questionAnswer.title
+  }, questionAnswer))))), react.createElement("div", {
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-title mkt-title--large"
+  }, "A Little Bit About Us"), react.createElement("div", {
+    className: "mkt-container__inner mkt-about"
+  }, react.createElement("div", {
+    className: "mkt-copy"
+  }, about.map((aboutSection, index) => react.createElement(react.Fragment, null, aboutSection, index + 1 < about.length && [react.createElement("br", null), react.createElement("br", null)]))))), react.createElement("div", {
+    className: "mkt-footer-container"
+  }, react.createElement("div", {
+    className: "mkt-footer"
+  }, react.createElement("svg", {
+    className: "mkt-footer__svg",
+    viewBox: "0 0 100 100",
+    preserveAspectRatio: "none"
+  }, react.createElement("polygon", {
+    points: "0,-1 100,-1 100,31.6 0,100"
+  })), react.createElement("div", {
+    className: "mkt-footer__bg"
+  })), react.createElement("div", {
+    id: "mkt-form",
+    className: "mkt-container"
+  }, react.createElement("div", {
+    className: "mkt-container__inner"
+  }, react.createElement("div", {
+    className: "mkt-form"
+  }, react.createElement(Form, {
+    formPostUrl: "http://www.google.com"
+  }))))));
+}
+
+reactDom.render(react.createElement(Vendor, {
+  formPostUrl: "https://localhost/testing/index",
+  logo: "../src/images/web-logo.png",
+  theme: "clark",
+  cards: [{
+    icon: '../src/images/reach-icon.png',
+    title: 'Increase Your Reach',
+    content: react.createElement(react.Fragment, null, "Leverage world\u2019s leading distributor of restaurant supplies and equipment to gain exposure to", ' ', react.createElement("span", {
+      className: "mkt-highlight"
+    }, "millions"), ' ', "of highly engaged visitors a month")
+  }, {
+    icon: '../src/images/support-icon.png',
+    title: 'Customer Support',
+    content: react.createElement(react.Fragment, null, "Webstaurant\u2019s", ' ', react.createElement("span", {
+      className: "mkt-highlight"
+    }, "24/7 support"), ' ', "allows customers to ask questions any time about your products, increasing loyalty and driving sales", ' ')
+  }, {
+    icon: '../src/images/shipping-icon.png',
+    title: 'Nationwide Shipping',
+    content: react.createElement(react.Fragment, null, "Ship your products to", ' ', react.createElement("span", {
+      className: "mkt-highlight"
+    }, "90%"), "* of the US in 2 days to meet customer expectations, reduce cart abandonment, and keep them coming back")
+  }],
+  quote: {
+    content: react.createElement(react.Fragment, null, "\"Lorem ipsum dolor sit amet,", ' ', react.createElement("span", {
+      className: "mkt-highlight"
+    }, "consectetur adipiscing"), ' ', "elit. Sed congue arcu ut dolor vehicula dictum.\""),
+    name: 'Name',
+    company: 'Company'
+  },
+  brands: ['../src/images/logo-dart.png', '../src/images/logo-solo.png', '../src/images/logo-vollrath.png', '../src/images/logo-libbey.png', '../src/images/logo-cambro.png', '../src/images/logo-beverageair.png', '../src/images/logo-scotsman.png', '../src/images/logo-tabco.png', '../src/images/logo-bfm.png', '../src/images/logo-ts.png', '../src/images/logo-continental.png'],
+  features: [{
+    img: '../src/images/feature-img.jpg',
+    title: 'Feature Headline',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue arcu ut dolor vehicula dictum. Integer ut urna ultrices, finibus elit pellentesque, elementum diam. Etiam in aliquet nulla. Meanness metus ex, condimentum sit amet pretium ac, condimentum vitae. Lorem ipsum dolor sit amet.',
+    link: {
+      text: 'Call to Action',
+      href: '#mkt-form'
+    },
+    alignment: 'left'
+  }, {
+    img: '../src/images/feature-img.jpg',
+    title: 'Feature Headline 2',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue arcu ut dolor vehicula dictum. Integer ut urna ultrices, finibus elit pellentesque, elementum diam. Etiam in aliquet nulla. Meanness metus ex, condimentum sit amet pretium ac, condimentum vitae. Lorem ipsum dolor sit amet.',
+    link: {
+      text: 'Call to Action',
+      href: '#mkt-form'
+    },
+    alignment: 'right'
+  }],
+  steps: [{
+    icon: '../src/images/reach-icon.png',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue arcu ut Dolor vehicula dictum.'
+  }, {
+    icon: '../src/images/support-icon.png',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue arcu ut Dolor vehicula dictum.'
+  }, {
+    icon: '../src/images/shipping-icon.png',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue arcu ut Dolor vehicula dictum.'
+  }],
+  faq: [{
+    title: 'Is this an example FAQ question headline?',
+    content: react.createElement(react.Fragment, null, react.createElement("span", {
+      className: "mkt-highlight"
+    }, "Yes"), ", and this is an example FAQ question answer, that might also include a text link to somewhere else on the site.")
+  }, {
+    title: 'Is this an example of a really long FAQ question headline that goes to two lines?',
+    content: react.createElement(react.Fragment, null, react.createElement("span", {
+      className: "mkt-highlight"
+    }, "Yes"), ", and this is an example FAQ question answer, that might also include a text link to somewhere else on the site.")
+  }, {
+    title: 'Is this an example FAQ question headline foo bar?',
+    content: react.createElement(react.Fragment, null, react.createElement("span", {
+      className: "mkt-highlight"
+    }, "Yes"), ", and this is an example FAQ question answer, that might also include a text link to somewhere else on the site.")
+  }, {
+    title: 'Is this an example of a really long FAQ question headline that goes to two lines bar baz?',
+    content: react.createElement(react.Fragment, null, react.createElement("span", {
+      className: "mkt-highlight"
+    }, "Yes"), ", and this is an example FAQ question answer, that might also include a text link to somewhere else on the site.")
+  }],
+  about: ['Based in Lancaster, PA, WebstaurantStore is the largest online restaurant supply store serving food service professionals and individual custoers worldwide. With thousands of available products and over 5.5 million orders shipped, we have everything your business needs to function at its best. Over the years we have expanded our selection of wholesale supplies and commercial equipment to include healthcare, educational, and hotel supplies.', 'Our focus is your convenience – order online from your laptop, desktop, or smartphone 24 hours a day, 7 days a week. Our fast shipping, low prices, and outstanding customer service make WebstaurantStore the best choice to meet all of your professional and food service supply needs.']
 }), document.getElementById('mount'));

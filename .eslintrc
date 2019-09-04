@@ -5,6 +5,7 @@
         "document": false,
         "FormData": false,
         "fetch": false,
+        "DOMParser": false,
     },
     "rules": {
         "no-new": 0,

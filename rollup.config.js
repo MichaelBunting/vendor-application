@@ -7,7 +7,7 @@ import scss from 'rollup-plugin-scss';
 import pkg from './package.json';
 
 export default [{
-  input: 'src/index',
+  input: 'src/js/index',
   output: [{
     file: pkg.main,
     format: 'es',
@@ -17,7 +17,7 @@ export default [{
   ],
   plugins: [
     resolve({
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.sass'],
     }),
     babel({
       exclude: 'node_modules/**',
@@ -25,6 +25,8 @@ export default [{
       presets: ['@babel/preset-typescript', '@babel/preset-react'],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
+    scss(),
+    globals(),
     (process.env.BUILD === 'production' && terser()),
   ],
 }, {
@@ -36,7 +38,7 @@ export default [{
   plugins: [
     resolve({
       browser: true,
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.sass'],
     }),
     babel({
       exclude: 'node_modules/**',
@@ -45,6 +47,7 @@ export default [{
     }),
     commonjs({
       include: ['node_modules/**'],
+      extensions: ['.js', '.jsx'],
       namedExports: {
         'node_modules/react/index.js': ['useState', 'useCallback'],
       },
