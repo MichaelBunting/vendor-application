@@ -140,12 +140,12 @@ export default function Vendor({
         <div className="mkt-container__inner mkt-about">
           <div className="mkt-copy">
             {about.map((aboutSection, index) => (
-              <>
+              <React.Fragment key={aboutSection}>
                 {aboutSection}
                 {index + 1 < about.length && (
-                  [<br />, <br />]
+                  [<br key="break1" />, <br key="break2" />]
                 )}
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>

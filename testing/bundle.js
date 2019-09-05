@@ -26652,163 +26652,123 @@ var reactDom = createCommonjsModule(function (module) {
 }
 });
 
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function InputWrapper({
-  label = '',
-  id = '',
-  type = '',
-  children
+function n({
+  label: t = "",
+  id: a = "",
+  type: n = "",
+  children: c
 }) {
   return react.createElement("div", {
-    className: `application__form-container${type ? ` application__form-container--${type}` : ''}`
+    className: `application__form-container${n ? ` application__form-container--${n}` : ""}`
   }, react.createElement("label", {
-    htmlFor: id,
+    htmlFor: a,
     className: "application__label"
-  }, label), react.createElement("div", {
+  }, t), react.createElement("div", {
     className: "application__input-container"
-  }, children));
+  }, c));
 }
 
-function capitalize(string) {
-  return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
-}
-function camelCase(string) {
-  const properlyCasedString = string.replace(/^([A-Z]+)(?=[A-Z])/g, word => word.toLowerCase());
-  return properlyCasedString.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+function c(e) {
+  return `${e.charAt(0).toUpperCase()}${e.slice(1)}`;
 }
 
-function useInputValidation(validationFunction) {
-  const [error, setError] = react_1(null);
+function l() {
+  return (l = Object.assign || function (e) {
+    for (var t = 1; t < arguments.length; t++) {
+      var a = arguments[t];
 
-  const handleInputValidation = e => {
-    const validationResults = validationFunction(e);
-
-    if (validationResults.success) {
-      setError(null);
+      for (var n in a) Object.prototype.hasOwnProperty.call(a, n) && (e[n] = a[n]);
     }
 
-    setError(validationResults.error);
-  };
-
-  const setInputRef = react_2(node => {
-    if (node) {
-      node.addEventListener('blur', handleInputValidation);
-    }
-  }, []);
-  return [setInputRef, error];
+    return e;
+  }).apply(this, arguments);
 }
 
-function Input({
-  type = 'text',
-  label,
-  name,
-  required = true
+function i({
+  type: i = "text",
+  label: r,
+  name: m,
+  required: s = !0
 }) {
-  const inputValidator = e => {
-    const input = e.target;
-
-    if (input.value && input.value.replace(/\s/g, '')) {
-      if (type === 'email') {
-        if (/.+@(?:.+){2,}\.(?:.+){2,}/.test(input.value)) {
-          return {
-            success: true
-          };
-        }
-
-        return {
-          success: false,
-          error: 'Invalid email address'
-        };
-      }
-
-      return {
-        success: true
-      };
-    }
-
-    return {
-      success: false,
-      error: 'Input is required'
+  const o = e => {
+    const t = e.target;
+    return t.value && t.value.replace(/\s/g, "") ? "email" === i ? /.+@(?:.+){2,}\.(?:.+){2,}/.test(t.value) ? {
+      success: !0
+    } : {
+      success: !1,
+      error: "Invalid email address"
+    } : {
+      success: !0
+    } : {
+      success: !1,
+      error: "Input is required"
     };
-  };
+  },
+        p = `application${c(m)}`;
 
-  const id = `application${capitalize(name)}`;
-  let inputRef;
-  let error;
+  let u, d;
+  return s && ([u, d] = function (e) {
+    const [n, c] = react_1(null),
+          l = t => {
+      const a = e(t);
+      a.success && c(null), c(a.error);
+    };
 
-  if (required) {
-    [inputRef, error] = useInputValidation(inputValidator);
-  }
-
-  return react.createElement(InputWrapper, {
-    label,
-    id
-  }, react.createElement("input", _extends({
-    type,
-    name,
-    id
+    return [react_2(e => {
+      e && e.addEventListener("blur", l);
+    }, []), n];
+  }(o)), react.createElement(n, {
+    label: r,
+    id: p
+  }, react.createElement("input", l({
+    type: i,
+    name: m,
+    id: p
   }, {
     className: "application__input",
-    ref: inputRef
-  })), error && react.createElement("div", {
+    ref: u
+  })), d && react.createElement("div", {
     className: "application__form-error"
-  }, error));
+  }, d));
 }
 
-function Select({
-  label = '',
-  name = '',
-  options = {}
+function r({
+  label: t = "",
+  name: a = "",
+  options: l = {}
 }) {
-  const id = `application${capitalize(name)}`;
-  return react.createElement(InputWrapper, {
-    id,
-    label
+  const i = `application${c(a)}`;
+  return react.createElement(n, {
+    id: i,
+    label: t
   }, react.createElement("select", {
     className: "application__input",
-    id: id,
-    name: name
-  }, Object.keys(options).map(optionName => react.createElement("option", {
-    key: optionName,
-    value: options[optionName]
-  }, optionName))), react.createElement("i", {
+    id: i,
+    name: a
+  }, Object.keys(l).map(t => react.createElement("option", {
+    key: t,
+    value: l[t]
+  }, t))), react.createElement("i", {
     className: "application__input-icon fa fa-caret-down"
   }));
 }
 
-function InputAddress({
-  label = ''
+function m({
+  label: a = ""
 }) {
-  const name = 'addressLine1';
-  const id = `application${capitalize(name)}`;
-  const [secondLineActive, setSecondLineActive] = react_1(false);
-  return react.createElement(InputWrapper, {
-    label,
-    name,
-    id
+  const l = "addressLine1",
+        i = `application${c(l)}`,
+        [r, m] = react_1(!1);
+  return react.createElement(n, {
+    label: a,
+    name: l,
+    id: i
   }, react.createElement("input", {
     type: "text",
-    id: id,
-    name: name,
+    id: i,
+    name: l,
     className: "application__input"
-  }), secondLineActive && react.createElement("input", {
+  }), r && react.createElement("input", {
     type: "text",
     id: "applicationAddressLine2",
     name: "addressLine2",
@@ -26817,159 +26777,132 @@ function InputAddress({
     type: "button",
     className: "application__input-action",
     onClick: () => {
-      setSecondLineActive(!secondLineActive);
+      m(!r);
     }
-  }, secondLineActive ? '- Remove second line' : '+ Add a second line'));
+  }, r ? "- Remove second line" : "+ Add a second line"));
 }
 
-function Checkboxes({
-  name = '',
-  options,
-  checkboxRestrictions
+function s({
+  name: a = "",
+  options: n,
+  checkboxRestrictions: c
 }) {
-  const [checkedInputs, setCheckedInputs] = react_1(new Map());
-  const [checkboxValues, setCheckboxValues] = react_1('');
-
-  const handleCheckboxClick = e => {
-    const currentCheckedInputs = checkedInputs;
-    const input = e.currentTarget;
-
-    if (input.checked) {
-      if (!checkboxRestrictions) {
-        currentCheckedInputs.set(input.value, input);
-      } else if (checkboxRestrictions(e, [...checkedInputs.values()])) {
-        currentCheckedInputs.set(input.value, input);
-      }
-    } else {
-      currentCheckedInputs.delete(input.value);
-    }
-
-    const currentCheckboxValues = [...currentCheckedInputs.values()].map(inputElement => inputElement.value).join(', ');
-    setCheckedInputs(currentCheckedInputs);
-    setCheckboxValues(currentCheckboxValues);
+  const [l, i] = react_1(new Map()),
+        [r, m] = react_1(""),
+        s = e => {
+    const t = l,
+          a = e.currentTarget;
+    a.checked ? c ? c(e, [...l.values()]) && t.set(a.value, a) : t.set(a.value, a) : t.delete(a.value);
+    const n = [...t.values()].map(e => e.value).join(", ");
+    i(t), m(n);
   };
 
   return react.createElement(react.Fragment, null, react.createElement("input", {
     type: "hidden",
-    name: name,
-    value: checkboxValues
-  }), options.map(option => {
-    const sanitizedOption = option.replace(/[^A-z0-9\s()]|\(\w+\)+/g, '');
-    const optionValue = camelCase(sanitizedOption);
+    name: a,
+    value: r
+  }), n.map(t => {
+    const a = function (e) {
+      return e.replace(/^([A-Z]+)(?=[A-Z])/g, e => e.toLowerCase()).replace(/(?:^\w|[A-Z]|\b\w)/g, (e, t) => 0 === t ? e.toLowerCase() : e.toUpperCase()).replace(/\s+/g, "");
+    }(t.replace(/[^A-z0-9\s()]|\(\w+\)+/g, ""));
+
     return react.createElement("label", {
       className: "application__check-container",
-      key: optionValue
+      key: a
     }, react.createElement("input", {
       type: "checkbox",
       className: "application__check-input",
-      value: optionValue,
-      id: `${optionValue}Checkbox`,
-      onClick: handleCheckboxClick
+      value: a,
+      id: `${a}Checkbox`,
+      onClick: s
     }), react.createElement("div", {
       className: "application__check"
     }, react.createElement("i", {
       className: "fa fa-check application__check-icon"
     })), react.createElement("span", {
       className: "application__check-label"
-    }, option));
+    }, t));
   }));
 }
 
-function InputFile({
-  label = ''
+function o({
+  label: a = ""
 }) {
-  const name = 'priceList';
-  const id = 'applicationPriceList';
-  const [selectedFile, setSelectedFile] = react_1(null);
-
-  const handleFileChange = e => {
-    const input = e.target;
-    setSelectedFile(input.files[0].name);
-  };
-
-  return react.createElement(InputWrapper, {
-    label,
-    name,
-    id
+  const c = "applicationPriceList",
+        [l, i] = react_1(null);
+  return react.createElement(n, {
+    label: a,
+    name: "priceList",
+    id: c
   }, react.createElement("label", {
-    htmlFor: id,
+    htmlFor: c,
     className: "application__file application__input"
   }, react.createElement("input", {
     type: "file",
-    name: name,
-    id: id,
+    name: "priceList",
+    id: c,
     className: "application__file-input",
     accept: ".xls, .pdf",
-    onChange: handleFileChange
+    onChange: e => {
+      const t = e.target;
+      i(t.files[0].name);
+    }
   }), react.createElement("span", {
     className: "application__file-placeholder"
-  }, !selectedFile ? 'Choose File' : selectedFile), react.createElement("i", {
+  }, l || "Choose File"), react.createElement("i", {
     className: "fa fa-upload application__input-icon"
   })));
 }
 
-var Form = (({
-  formPostUrl
+var p = ({
+  formPostUrl: t
 }) => {
-  const checkboxRestrictions = (e, checkboxElements) => {
-    const input = e.target;
-
-    if (input.checked && checkboxElements.length >= 3) {
-      e.preventDefault();
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleFormSubmit = e => {
-    e.preventDefault();
-    const body = new FormData(e.currentTarget);
-    fetch(formPostUrl, {
-      method: 'POST',
-      body
-    });
-  };
-
   return react.createElement("div", {
     className: "application"
   }, react.createElement("h1", {
     className: "application__header"
   }, "Apply Now"), react.createElement("form", {
     className: "application__form",
-    onSubmit: handleFormSubmit
+    onSubmit: e => {
+      e.preventDefault();
+      const a = new FormData(e.currentTarget);
+      fetch(t, {
+        method: "POST",
+        body: a
+      });
+    }
   }, react.createElement("div", {
     className: "application__section application__section--inputs"
-  }, react.createElement(Input, {
+  }, react.createElement(i, {
     label: "Contact Name",
     name: "contactName"
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     type: "email",
     label: "Email Address",
     name: "email"
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     label: "Business Name",
     name: "business"
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     label: "Website",
     name: "website",
-    required: false
-  }), react.createElement(Select, {
+    required: !1
+  }), react.createElement(r, {
     label: "Business Type",
     name: "businessType",
     options: {
-      Manufacturer: 'manufacturer',
-      '3rd Party': '3rdparty',
-      Foo: 'foo',
-      Bar: 'bar'
+      Manufacturer: "manufacturer",
+      "3rd Party": "3rdparty",
+      Foo: "foo",
+      Bar: "bar"
     }
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     type: "number",
     label: "Phone Number",
     name: "phone"
-  }), react.createElement(InputAddress, {
+  }), react.createElement(m, {
     label: "Address"
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     type: "number",
     label: "Zip/Postal Code",
     name: "zipcode"
@@ -26981,54 +26914,56 @@ var Form = (({
     className: "application__section-title"
   }, "Primary Product Category(ies)"), react.createElement("span", {
     className: "application__section-subtitle"
-  }, "Select up to three")), react.createElement(Checkboxes, {
+  }, "Select up to three")), react.createElement(s, {
     name: "productCategories",
-    options: ['Restaurant Equipment', 'Concession & Food Truck Equipment', 'Refrigeration Equipment', 'Residential Kitchen Equipment', 'Small Wares', 'Storage & Transportation', 'Tabletop & Serving', 'Disposables', 'Furniture', 'Restaurant Dinnerware', 'Food & Beverage', 'Janitorial Supplies', 'Chemical Products', 'Office Products', 'Industrial Supplies'],
-    checkboxRestrictions: checkboxRestrictions
+    options: ["Restaurant Equipment", "Concession & Food Truck Equipment", "Refrigeration Equipment", "Residential Kitchen Equipment", "Small Wares", "Storage & Transportation", "Tabletop & Serving", "Disposables", "Furniture", "Restaurant Dinnerware", "Food & Beverage", "Janitorial Supplies", "Chemical Products", "Office Products", "Industrial Supplies"],
+    checkboxRestrictions: (e, t) => {
+      return !(e.target.checked && t.length >= 3) || (e.preventDefault(), !1);
+    }
   })), react.createElement("div", {
     className: "application__section application__section--checkboxes"
   }, react.createElement("div", {
     className: "application__section-heading"
   }, react.createElement("h2", {
     className: "application__section-title"
-  }, "Product Certifications")), react.createElement(Checkboxes, {
+  }, "Product Certifications")), react.createElement(s, {
     name: "productCertifications",
-    options: ['NSF International', 'Underwriters Laboritory (UL)', 'European Union (CE)', 'Canadian Standards Association (CSA)', 'Energy Star', 'ETL Intertek', 'Canadian Gas Association (CGA)', 'NTEP', 'ADA Compliant', 'Plumbing and Drainage Institution (PDI)', 'Green Seal Certified', 'USGBC']
+    options: ["NSF International", "Underwriters Laboritory (UL)", "European Union (CE)", "Canadian Standards Association (CSA)", "Energy Star", "ETL Intertek", "Canadian Gas Association (CGA)", "NTEP", "ADA Compliant", "Plumbing and Drainage Institution (PDI)", "Green Seal Certified", "USGBC"]
   })), react.createElement("div", {
     className: "application__section application__section--inputs"
-  }, react.createElement(Select, {
+  }, react.createElement(r, {
     label: "Product Country of Origin",
     name: "countryOfOrigin",
     options: {
-      'United States of America': 'USA',
-      Australia: 'AU'
+      "United States of America": "USA",
+      Australia: "AU"
     }
-  }), react.createElement(Select, {
+  }), react.createElement(r, {
     label: "Annual Sales",
     name: "annualSales",
     options: {
-      'Less Than $100,000': '<100k',
-      '$100,000 - $500,000': '100k-500k',
-      'Over $1,000,000': '>1m'
+      "Less Than $100,000": "<100k",
+      "$100,000 - $500,000": "100k-500k",
+      "Over $1,000,000": ">1m"
     }
-  }), react.createElement(InputFile, {
+  }), react.createElement(o, {
     label: "Price List"
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     type: "number",
     label: "SKU Count",
     name: "skuCount"
-  }), react.createElement(Select, {
+  }), react.createElement(r, {
     label: "EDI Capability",
     name: "ediCapability",
     options: {
-      'EDI Compliant': 'compliant',
-      'Not EDI Compliant': 'notCompliant'
+      "EDI Compliant": "compliant",
+      "Not EDI Compliant": "notCompliant"
     }
-  }), react.createElement(Input, {
+  }), react.createElement(i, {
     type: "text",
     label: "Image/Video Database",
     name: "imgDatabase"
-  }), react.createElement(InputWrapper, {
+  }), react.createElement(n, {
     label: "Existing Customer Presence",
     id: "applicationCustomerPresence",
     type: "textarea"
@@ -27043,12 +26978,12 @@ var Form = (({
     type: "submit",
     className: "application__submit"
   }, "Apply to Sell")))));
-});
+};
 
-function Card({
-  icon,
-  title,
-  content
+function u({
+  icon: t,
+  title: a,
+  content: n
 }) {
   return react.createElement("div", {
     className: "mkt-card"
@@ -27056,48 +26991,48 @@ function Card({
     className: "mkt-icon mkt-icon--tucked"
   }, react.createElement("img", {
     className: "mkt-icon__img",
-    src: icon,
+    src: t,
     alt: "Reach Icon"
   })), react.createElement("div", {
     className: "mkt-title"
-  }, title), react.createElement("div", {
+  }, a), react.createElement("div", {
     className: "mkt-copy"
-  }, content));
+  }, n));
 }
 
-function Feature({
-  img,
-  title,
-  content,
-  link,
-  alignment
+function d({
+  img: t,
+  title: a,
+  content: n,
+  link: c,
+  alignment: l
 }) {
   return react.createElement("div", {
     className: "mkt-article"
   }, react.createElement("div", {
-    className: `mkt-article__img mkt-article__img--${alignment === 'left' ? 'right' : 'left'}`
+    className: `mkt-article__img mkt-article__img--${"left" === l ? "right" : "left"}`
   }, react.createElement("img", {
-    src: img,
+    src: t,
     alt: "feature"
   })), react.createElement("div", {
-    className: `mkt-article__card mkt-article__card--${alignment}`
+    className: `mkt-article__card mkt-article__card--${l}`
   }, react.createElement("div", {
     className: "mkt-title"
-  }, title), react.createElement("div", {
+  }, a), react.createElement("div", {
     className: "mkt-copy"
-  }, content), react.createElement("a", {
+  }, n), react.createElement("a", {
     className: "mkt-link",
-    href: link.href
-  }, link.text, ' ', react.createElement("i", {
+    href: c.href
+  }, c.text, " ", react.createElement("i", {
     className: "fas fa-angle-right"
   }))));
 }
 
-function Step({
-  icon,
-  content,
-  index,
-  showArrow = true
+function _({
+  icon: t,
+  content: a,
+  index: n,
+  showArrow: c = !0
 }) {
   return react.createElement(react.Fragment, null, react.createElement("div", {
     className: "mkt-card"
@@ -27105,45 +27040,57 @@ function Step({
     className: "mkt-icon mkt-icon--tucked"
   }, react.createElement("img", {
     className: "mkt-icon__img",
-    src: icon,
+    src: t,
     alt: "icon"
   })), react.createElement("div", {
     className: "mkt-title"
-  }, "Step", ' ', index), react.createElement("div", {
+  }, "Step", " ", n), react.createElement("div", {
     className: "mkt-copy"
-  }, content)), showArrow && react.createElement("div", {
+  }, a)), c && react.createElement("div", {
     className: "mkt-how__arrow"
   }, react.createElement("i", {
     className: "fas fa-angle-right"
   })));
 }
 
-function FAQProps({
-  title,
-  content
+function E$1({
+  title: t,
+  content: a
 }) {
   return react.createElement("div", {
     className: "mkt-card"
   }, react.createElement("div", {
     className: "mkt-title"
-  }, title), react.createElement("div", {
+  }, t), react.createElement("div", {
     className: "mkt-copy"
-  }, content));
+  }, a));
 }
 
-function Vendor({
-  theme = 'web',
-  logo,
-  cards,
-  quote,
-  brands,
-  features,
-  steps,
-  faq,
-  about
+function k() {
+  return (k = Object.assign || function (e) {
+    for (var t = 1; t < arguments.length; t++) {
+      var a = arguments[t];
+
+      for (var n in a) Object.prototype.hasOwnProperty.call(a, n) && (e[n] = a[n]);
+    }
+
+    return e;
+  }).apply(this, arguments);
+}
+
+function VendorApplication ({
+  theme: t = "web",
+  logo: a,
+  cards: n,
+  quote: c,
+  brands: l,
+  features: i,
+  steps: r,
+  faq: m,
+  about: s
 }) {
   return react.createElement("div", {
-    className: `mkt-landing ${`theme--${theme}`}`
+    className: `mkt-landing ${`theme--${t}`}`
   }, react.createElement("div", {
     className: "mkt-hero"
   }, react.createElement("svg", {
@@ -27160,20 +27107,20 @@ function Vendor({
     className: "mkt-hero__container"
   }, react.createElement("img", {
     className: "mkt-hero__logo",
-    src: logo,
+    src: a,
     alt: "WebstaurantStore"
   }), react.createElement("h1", {
     className: "mkt-hero__headline"
   }, "Sell Your Products"), react.createElement("h1", {
     className: "mkt-hero__headline mkt-hero__headline--small"
-  }, "on the Largest Restaurant Supply\xA0Store"), react.createElement("a", {
+  }, "on the Largest Restaurant Supply Store"), react.createElement("a", {
     className: "mkt-button mkt-button--white",
     href: "#mkt-form"
   }, "Apply to Sell")), react.createElement("div", {
     className: "mkt-container__inner mkt-container__inner--cards"
-  }, cards.map(card => react.createElement(Card, _extends({
-    key: card.title
-  }, card))))), react.createElement("div", {
+  }, n.map(t => react.createElement(u, k({
+    key: t.title
+  }, t))))), react.createElement("div", {
     className: "mkt-container"
   }, react.createElement("div", {
     className: "mkt-container__inner"
@@ -27183,17 +27130,17 @@ function Vendor({
     className: "mkt-quote__icon"
   }, react.createElement("img", {
     className: "mkt-quote__img",
-    src: `../src/images/quote-icon${theme !== 'web' ? `-${theme}` : ''}.png`,
+    src: `../src/images/quote-icon${"web" !== t ? `-${t}` : ""}.png`,
     alt: "Quote Icon"
   })), react.createElement("div", {
     className: "mkt-quote__copy"
-  }, quote.content)), react.createElement("div", {
+  }, c.content)), react.createElement("div", {
     className: "mkt-quote__name"
   }, react.createElement("img", {
     className: "mkt-quote__img",
-    src: `../src/images/speech-point${theme !== 'web' ? `-${theme}` : ''}.png`,
+    src: `../src/images/speech-point${"web" !== t ? `-${t}` : ""}.png`,
     alt: "Speech Point"
-  }), ' ', react.createElement("b", null, quote.name), ' ', quote.company))), react.createElement("div", {
+  }), " ", react.createElement("b", null, c.name), " ", c.company))), react.createElement("div", {
     className: "mkt-container"
   }, react.createElement("div", {
     className: "mkt-container__inner"
@@ -27203,11 +27150,11 @@ function Vendor({
     className: "fas fa-angle-left"
   })), react.createElement("div", {
     className: "mkt-brands"
-  }, brands.map(brand => react.createElement("div", {
-    key: brand
+  }, l.map(t => react.createElement("div", {
+    key: t
   }, react.createElement("img", {
     className: "mkt-brands__img",
-    src: brand,
+    src: t,
     alt: "brand"
   })))), react.createElement("div", {
     className: "mkt__arrow mkt__arrow--right next slick-next"
@@ -27217,9 +27164,9 @@ function Vendor({
     className: "mkt-container"
   }, react.createElement("div", {
     className: "mkt-container__inner"
-  }, features.map(feature => react.createElement(Feature, _extends({
-    key: feature.title
-  }, feature))))), react.createElement("div", {
+  }, i.map(t => react.createElement(d, k({
+    key: t.title
+  }, t))))), react.createElement("div", {
     className: "mkt-featured"
   }, react.createElement("svg", {
     className: "mkt-featured__svg mkt-featured__svg--top",
@@ -27241,20 +27188,20 @@ function Vendor({
     className: "mkt-title mkt-title--large"
   }, "How it Works"), react.createElement("div", {
     className: "mkt-container__inner mkt-container__inner--cards mkt-how"
-  }, steps.map((step, index) => react.createElement(Step, _extends({
-    key: step.icon
-  }, step, {
-    index: index,
-    showArrow: index + 1 < steps.length
+  }, r.map((t, a) => react.createElement(_, k({
+    key: t.icon
+  }, t, {
+    index: a,
+    showArrow: a + 1 < r.length
   }))))), react.createElement("div", {
     className: "mkt-container"
   }, react.createElement("div", {
     className: "mkt-title mkt-title--faq"
   }, "Frequently Asked Questions"), react.createElement("div", {
     className: "mkt-container__inner mkt-container__inner--faq mkt-faq"
-  }, faq.map(questionAnswer => react.createElement(FAQProps, _extends({
-    key: questionAnswer.title
-  }, questionAnswer))))), react.createElement("div", {
+  }, m.map(t => react.createElement(E$1, k({
+    key: t.title
+  }, t))))), react.createElement("div", {
     className: "mkt-container"
   }, react.createElement("div", {
     className: "mkt-title mkt-title--large"
@@ -27262,7 +27209,13 @@ function Vendor({
     className: "mkt-container__inner mkt-about"
   }, react.createElement("div", {
     className: "mkt-copy"
-  }, about.map((aboutSection, index) => react.createElement(react.Fragment, null, aboutSection, index + 1 < about.length && [react.createElement("br", null), react.createElement("br", null)]))))), react.createElement("div", {
+  }, s.map((t, a) => react.createElement(react.Fragment, {
+    key: t
+  }, t, a + 1 < s.length && [react.createElement("br", {
+    key: "break1"
+  }), react.createElement("br", {
+    key: "break2"
+  })]))))), react.createElement("div", {
     className: "mkt-footer-container"
   }, react.createElement("div", {
     className: "mkt-footer"
@@ -27281,12 +27234,12 @@ function Vendor({
     className: "mkt-container__inner"
   }, react.createElement("div", {
     className: "mkt-form"
-  }, react.createElement(Form, {
+  }, react.createElement(p, {
     formPostUrl: "http://www.google.com"
   }))))));
 }
 
-reactDom.render(react.createElement(Vendor, {
+reactDom.render(react.createElement(VendorApplication, {
   formPostUrl: "https://localhost/testing/index",
   logo: "../src/images/web-logo.png",
   theme: "clark",

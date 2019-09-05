@@ -87,20 +87,20 @@
   .mkt-hero .mkt-hero__bg {
     width: 100%;
     height: 100%;
-    background-image: url(../src/images/hero-bg-mobile.png);
+    background-image: url("../src/images/hero-bg-mobile.png");
     background-size: cover;
     background-position: center; }
     .theme--trs .mkt-hero .mkt-hero__bg {
-      background-image: url(../src/images/hero-bg-mobile-trs.png); }
+      background-image: url("../src/images/hero-bg-mobile-trs.png"); }
     .theme--clark .mkt-hero .mkt-hero__bg {
-      background-image: url(../src/images/hero-bg-mobile-clark.png); }
+      background-image: url("../src/images/hero-bg-mobile-clark.png"); }
     @media screen and (min-width: 1100px) {
       .mkt-hero .mkt-hero__bg {
-        background-image: url(../src/images/hero-bg-desktop.png); }
+        background-image: url("../src/images/hero-bg-desktop.png"); }
         .theme--trs .mkt-hero .mkt-hero__bg {
-          background-image: url(../src/images/hero-bg-desktop-trs.png); }
+          background-image: url("../src/images/hero-bg-desktop-trs.png"); }
         .theme--clark .mkt-hero .mkt-hero__bg {
-          background-image: url(../src/images/hero-bg-desktop-clark.png); } }
+          background-image: url("../src/images/hero-bg-desktop-clark.png"); } }
 
 .mkt-hero__container {
   padding: 0;
@@ -430,13 +430,13 @@
   .mkt-featured .mkt-featured__bg {
     width: 100%;
     height: 100%;
-    background-image: url(../src/images/mid-bg-desktop.png);
+    background-image: url("../src/images/mid-bg-desktop.png");
     background-size: cover;
     background-position: center; }
     .theme--trs .mkt-featured .mkt-featured__bg {
-      background-image: url(../src/images/mid-bg-desktop-trs.png); }
+      background-image: url("../src/images/mid-bg-desktop-trs.png"); }
     .theme--clark .mkt-featured .mkt-featured__bg {
-      background-image: url(../src/images/mid-bg-desktop-clark.png); }
+      background-image: url("../src/images/mid-bg-desktop-clark.png"); }
 
 .mkt-article {
   width: 100%;
@@ -579,13 +579,13 @@
   .mkt-footer .mkt-footer__bg {
     width: 100%;
     height: 100%;
-    background-image: url(../src/images/footer-bg-desktop.png);
+    background-image: url("../src/images/footer-bg-desktop.png");
     background-size: cover;
     background-position: center; }
     .theme--trs .mkt-footer .mkt-footer__bg {
-      background-image: url(../src/images/footer-bg-desktop-trs.png); }
+      background-image: url("../src/images/footer-bg-desktop-trs.png"); }
     .theme--clark .mkt-footer .mkt-footer__bg {
-      background-image: url(../src/images/footer-bg-desktop-clark.png); }
+      background-image: url("../src/images/footer-bg-desktop-clark.png"); }
 
 .mkt-form {
   padding: 60px 30px;

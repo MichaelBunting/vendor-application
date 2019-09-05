@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import VendorApplication from '../src/js/index';
+import VendorApplication from '../build/bundle';
 import './index.scss';
 
 ReactDOM.render(
